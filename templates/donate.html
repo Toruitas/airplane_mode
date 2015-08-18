@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+    <form method="POST" action="">
+        <p>Thanks for donating</p>
+        {{ form.hidden_tag() }}
+        {{ form.email.label }}<br> {{ form.email }}<br>
+        {{ form.amount.label }} <br>{{ form.amount }}
+        <p><input type="submit" value="Donate"></p>
+    </form>
+{% endblock %}

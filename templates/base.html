@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flying Focus</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+{% block body %}
+    <div class="container">
+    {% block page_content %}
+
+    {% endblock page_content %}
+    </div>
+{% endblock body %}
+{% block scripts %}
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+{% endblock scripts %}
+</html>

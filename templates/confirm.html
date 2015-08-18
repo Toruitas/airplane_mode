@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+    <form class="container" action="{{ url_for("pay") }}" method="post">  <!-- where user should go after successful payment -->
+        <article style="margin-bottom:20px">
+            <label>
+                <span>Confirm your donation for ${{ amount_display }}</span>
+            </label>
+        </article>
+
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="{{ key }}"
+                data-name="Focused Flight"
+                data-description="Focused Flight Donation"
+                data-amount="{{ amount_cents }}"
+                data-label = "Donate with Stripe"
+                data-panel-label="Donate with Stripe"
+                data-bitcoin="False"
+                data-email="{{ email }}">
+        </script>
+
+    </form>
+{% endblock %}

@@ -1,0 +1,60 @@
+html{
+    background: url(img/bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: Calibri, Arial;
+}
+
+
+
+body, html{
+    color: #D69373;
+    margin: 0;
+    height: 100%;
+}
+
+.btn {
+  background: #d69273;
+  background-image: -webkit-linear-gradient(top, #d69273, #a15c3b);
+  background-image: -moz-linear-gradient(top, #d69273, #a15c3b);
+  background-image: -ms-linear-gradient(top, #d69273, #a15c3b);
+  background-image: -o-linear-gradient(top, #d69273, #a15c3b);
+  background-image: linear-gradient(to bottom, #d69273, #a15c3b);
+  -webkit-border-radius: 28px;
+  -moz-border-radius: 28px;
+  border-radius: 28px;
+
+  color: #ffffff;
+  font-size: 12px;
+  padding: 10px 30px 10px 30px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height:100%;
+}
+
+#blurb{
+    text-align:center;
+    border-radius: 28px;
+    width:250px;
+}
+
+#donate {
+    display:none;
+    text-align:center;
+    width:250px;
+}
+
+p{
+    text-align:center;
+}
+

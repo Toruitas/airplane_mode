@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{% block page_content %}
+{#<div style="visibility:hidden;">#}
+{#    <iframe width="420" height="315" src="https://www.youtube.com/embed/Lmx1vMouUt8?autoplay=1&amp;loop=1" frameborder="0" allowfullscreen></iframe>#}
+{#</div>#}
+    <div>
+        <audio id="audio" autoplay loop>
+            <source src="{{ url_for('static', filename='audio/Airplane_mode.m4a') }}" type="audio/mp3">
+        </audio>
+    </div>
+
+    <div id="blurb">
+        <h1>
+            flight mode focus
+        </h1>
+    </div>
+
+    <div id="donate">
+        <h3>Glad you enjoy the focus</h3>
+        <h4>A penny for your thoughts?</h4>
+        <a href="{{ url_for('donate') }}" target="_blank"><button class="btn">Donate</button></a>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+{% endblock scripts %}
