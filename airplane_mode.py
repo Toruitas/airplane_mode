@@ -6,11 +6,11 @@ from forms import DonateForm
 
 app = Flask(__name__)
 
-STRIPE_KEYS={'sk':os.environ.get['STRIPE_SK'],
-             'pk':os.environ.get['STRIPE_PK']}
+STRIPE_KEYS={'sk':os.environ.get('STRIPE_SK'),
+             'pk':os.environ.get('STRIPE_PK')}
 
 stripe.api_key = STRIPE_KEYS['sk']
-app.secret_key = os.environ.get['SECRET_KEY']
+app.secret_key = os.environ.get('SECRET_KEY')
 
 def stream():
     while True:
