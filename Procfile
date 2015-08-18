@@ -1,1 +1,1 @@
-web: gunicorn python app.py
+web: gunicorn airplane_mode:app --log-file=-
