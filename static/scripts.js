@@ -7,4 +7,4 @@ document.getElementById("audio").volume=0.5;
 setTimeout(function() {
     $("#donate").show();
     $("#blurb").hide();
-}, 6000); // wait 10 mins and hide it
+}, 600000); // wait 10 mins and hide it

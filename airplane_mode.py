@@ -62,6 +62,7 @@ def pay():
     :param first:
     :return:
     """
+    #todo: https://stripe.com/docs/guides/bitcoin#part-2-creating-a-charge BITCOIN
     customer = stripe.Customer.create(
         email=session['email'],
         card=request.form['stripeToken']  # having errors getting stripe token
