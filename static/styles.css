@@ -16,21 +16,22 @@ body, html{
 }
 
 .btn {
-  background: #d69273;
-  background-image: -webkit-linear-gradient(top, #d69273, #a15c3b);
-  background-image: -moz-linear-gradient(top, #d69273, #a15c3b);
-  background-image: -ms-linear-gradient(top, #d69273, #a15c3b);
-  background-image: -o-linear-gradient(top, #d69273, #a15c3b);
-  background-image: linear-gradient(to bottom, #d69273, #a15c3b);
-  -webkit-border-radius: 28px;
-  -moz-border-radius: 28px;
-  border-radius: 28px;
+    background: #d69273;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
 
-  color: #ffffff;
-  font-size: 12px;
-  padding: 10px 30px 10px 30px;
-  text-decoration: none;
-  cursor: pointer;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 7px 10px;
+    text-decoration: none;
+    cursor: pointer;
+    width: 50%;
+    transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -webkit-transition: all 0.3s ease 0s;
+    margin: 0 auto;
 }
 
 
@@ -52,9 +53,17 @@ body, html{
     display:none;
     text-align:center;
     width:250px;
+
 }
 
 p{
     text-align:center;
 }
 
+input{
+    border-radius: 5px;
+}
+
+a{
+    text-decoration: none;
+}

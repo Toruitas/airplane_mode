@@ -12,11 +12,6 @@ STRIPE_KEYS={'sk':os.environ.get('STRIPE_SK'),
 stripe.api_key = STRIPE_KEYS['sk']
 app.secret_key = os.environ.get('SECRET_KEY')
 
-def stream():
-    while True:
-        yield ('Content-Type: audio/mp4')
-    stream()
-
 
 @app.route('/')
 def index():
@@ -89,4 +84,4 @@ def pay():
     return render_template('thanks.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True)  #debug=True
