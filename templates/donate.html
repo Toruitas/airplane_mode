@@ -4,8 +4,10 @@
     <form method="POST" action="">
         <p>Thanks for donating</p>
         {{ form.hidden_tag() }}
-        {{ form.email.label }}<br> {{ form.email }}<br>
-        {{ form.amount.label }} <br>{{ form.amount }}
+        <label for="email">Email</label><br>
+        <input id="email" name="email" type="email" value="" required><br>
+        <label for="amount">Amount ($USD)</label> <br>
+        <input id="amount" name="amount" type="text" value="" required>
         <p><input type="submit" value="Donate"></p>
     </form>
 {% endblock %}
