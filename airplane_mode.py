@@ -63,24 +63,54 @@ def pay():
     :return:
     """
     #todo: https://stripe.com/docs/guides/bitcoin#part-2-creating-a-charge BITCOIN
-    customer = stripe.Customer.create(
-        email=session['email'],
-        card=request.form['stripeToken']  # having errors getting stripe token
-    )
 
-    try:
+    if request.form['stripeTokenType'] == 'bitcoin_receiver':
+
+        receiver = stripe.BitcoinReceiver.create(
+            amount=session['amount_cents'],     # amount in cents
+            currency="usd", # presently can only make bitcoin charges in USD
+            email=session['email']
+        )
+        customer = stripe.Customer.create(
+            email=session['email'],
+            source=receiver.id
+        )
+        charge = stripe.Charge.create(
+            customer=customer.id,
+            amount=receiver.amount,
+            currency=receiver.currency,
+            description=customer.email
+        )
+    else:
+        customer = stripe.Customer.create(
+            email=session['email'],
+            card=request.form['stripeToken'],  # having errors getting stripe token
+        )
         charge = stripe.Charge.create(
             customer=customer.id,
             amount=session['amount_cents'],
             currency='usd',
-            description='donation to focused flight'
+            description=customer.email
         )
-        session.pop('email',0)
-        session.pop('amount_cents',0)
-        session.pop('amount_display',0)
+    #
+    # # try:
+    # #     charge = stripe.Charge.create(
+    # #         customer=customer.id,
+    # #         amount=session['amount_cents'],
+    # #         currency='usd',
+    # #         description=customer.email
+    # #     ) or stripe.Charge.create(
+    # #         customer=customer.id,
+    # #         amount=receiver.amount,
+    # #         currency=receiver.currency,
+    # #         description=customer.email
+    # #     )
+    session.pop('email',0)
+    session.pop('amount_cents',0)
+    session.pop('amount_display',0)
 
-    except stripe.CardError:
-        pass
+    # except stripe.CardError:
+    #     return "error error error"
 
     return render_template('thanks.html')
 
