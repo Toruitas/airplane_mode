@@ -23,6 +23,6 @@ $(document).ready(function() {
     setTimeout(function() {
         $("#donate").show();
         $("#blurb").hide();
-    }, 600000); // wait 10 mins and hide it
+    }, 6000); // wait 10 mins and hide it
 });
 

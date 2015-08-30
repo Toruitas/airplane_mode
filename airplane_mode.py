@@ -29,11 +29,22 @@ def donate():
     if form.validate_on_submit():
         amount = form.amount.data
         email = form.email.data
-        amount_cents = amount * 100
-        amount_cents = int(amount_cents)  # to account for this shit being in cents yo
+        amount = str(amount)
+        if ".0" in amount[-2:]:
+            amount = int(float(amount))
+            session['amount_cents'] = amount*100 #int(amount+"00")
+            session['amount_display'] = "{}.00".format(amount)
+        else:
+            a,b = str(amount).split('.')
+            b = b[:2]
+            session['amount_cents'] = int(a+b)
+            session['amount_display'] = "{}.{}".format(a,b)
+        # else:
+        #     session['amount_cents'] = int(amount) * 100
+        #     session['amount_display'] = "{}.00".format(int(amount))
+        #amount_cents = int(amount_cents)  # to account for this shit being in cents yo
         session['email'] = email
-        session['amount_cents'] = amount_cents
-        session['amount_display'] = amount
+        #session['amount_cents'] = amount_cents
         #return "{}".format(session['amount_cents'])
         return redirect(url_for('confirm'))
     return render_template('donate.html', form = form)
