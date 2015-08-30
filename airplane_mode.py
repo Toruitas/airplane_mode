@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, url_for, redirect, session
+from flask import Flask, request, render_template, url_for, redirect, session, flash
 import stripe
 import os
 from forms import DonateForm
@@ -15,11 +15,6 @@ app.secret_key = os.environ.get('SECRET_KEY')
 
 @app.route('/')
 def index():
-    """
-    http://www.techairlines.com/useful-youtube-url-tricks/
-    Hidden youtube for now hahahahahaha.
-    :return:
-    """
     return render_template('index.html')
 
 
@@ -39,13 +34,7 @@ def donate():
             b = b[:2]
             session['amount_cents'] = int(a+b)
             session['amount_display'] = "{}.{}".format(a,b)
-        # else:
-        #     session['amount_cents'] = int(amount) * 100
-        #     session['amount_display'] = "{}.00".format(int(amount))
-        #amount_cents = int(amount_cents)  # to account for this shit being in cents yo
         session['email'] = email
-        #session['amount_cents'] = amount_cents
-        #return "{}".format(session['amount_cents'])
         return redirect(url_for('confirm'))
     return render_template('donate.html', form = form)
 
@@ -61,46 +50,37 @@ def confirm():
 
 @app.route('/pay', methods=['POST'])
 def pay():
-    """
-    On confirmation, send email to Admins if it is a new Pot, or just directly allow. Or text.
-    Enter the test number 4242 4242 4242 4242, a three digit CVC and any expiry date in the future.
-    Submitting the form should bring up our successful charge page.
+    try:
+        if request.form['stripeTokenType'] == 'bitcoin_receiver':
+            customer = stripe.Customer.create(
+                email=session['email'],
+                source=request.form['stripeToken']
+            )
 
-    Having trouble getting stripe token: C:\Windows\System32\drivers\etc
-    http://stackoverflow.com/questions/6180720/how-to-fix-socket-gaierror-11004-getaddrinfo-failed-error-in-gae
-    :param amount:
-    :param pot:
-    :param first:
-    :return:
-    """
-    #todo: https://stripe.com/docs/guides/bitcoin#part-2-creating-a-charge BITCOIN
+        else:
+            customer = stripe.Customer.create(
+                email=session['email'],
+                card=request.form['stripeToken'],  # having errors getting stripe token
+            )
+        charge = stripe.Charge.create(
+            customer=customer.id,
+            amount=session['amount_cents'],
+            currency='usd',
+            description=customer.email
+            )
 
-    if request.form['stripeTokenType'] == 'bitcoin_receiver':
-        customer = stripe.Customer.create(
-            email=session['email'],
-            source=request.form['stripeToken']
-        )
+        session.pop('email',0)
+        session.pop('amount_cents',0)
+        session.pop('amount_display',0)
 
-    else:
-        customer = stripe.Customer.create(
-            email=session['email'],
-            card=request.form['stripeToken'],  # having errors getting stripe token
-        )
-    charge = stripe.Charge.create(
-        customer=customer.id,
-        amount=session['amount_cents'],
-        currency='usd',
-        description=customer.email
-        )
-
-    session.pop('email',0)
-    session.pop('amount_cents',0)
-    session.pop('amount_display',0)
-
-    # except stripe.CardError:
-    #     return "error error error"
+    except stripe.error.CardError as e:
+        flash("There seems to have been a problem charging your card...")
+        return render_template('error.html')
+    except stripe.error.StripeError:
+        flash("Ooops something went wrong! Not quite sure what...")
+        return render_template('error.html')
 
     return render_template('thanks.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)  #debug=True
+    app.run()  #debug=True
