@@ -6,25 +6,35 @@
 {#    <iframe width="420" height="315" src="https://www.youtube.com/embed/Lmx1vMouUt8?autoplay=1&amp;loop=1" frameborder="0" allowfullscreen></iframe>#}
 {#</div>#}
     <div>
-        <audio id="audio" autoplay loop>
+	    <audio id="audio" autoplay loop>
             <source src="{{ url_for('static', filename='audio/Airplane_mode.mp3') }}" type="audio/mp3">
+            Your computer doesn't support the audio element. So sowwy.
         </audio>
     </div>
 
-    <div id="blurb">
+    <div id="blurb" class="main">
         <h1>
             flight mode focus
         </h1>
     </div>
 
-    <div id="donate">
+
+
+    <div id="donate" class="main">
         <h3>Glad you enjoy the focus</h3>
         <h4>A penny for your thoughts?</h4>
         <a href="{{ url_for('donate') }}" target="_blank"><div class="btn">Donate</div></a>
+    </div>
+
+    <div id="slider_container">
+        <img class="icon1" src="{{ url_for('static',filename='img/audio-volume-medium-panel-low.png') }}">
+        <div id="slider"></div>
+        <img class="icon2" src="{{ url_for('static',filename='img/audio-volume-medium-panel-full.png') }}">
     </div>
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 {% endblock scripts %}
